@@ -1,0 +1,15 @@
+<form class="w-full h-full flex flex-col justify-center items-center gap-8">
+  <div>
+    <h2 class="font-semibold text-2xl text-center">Acessar App</h2>
+    <h6 class="">Comece a gerenciar suas tarefas a partir de hoje!</h6>
+  </div>
+  <div class="flex flex-col gap-2 w-full">
+    <h2>E-mail:</h2>
+    <app-input [type]="'email'"></app-input>
+    <h2>Senha:</h2>
+    <app-input [type]="'password'"></app-input>
+  </div>
+  <div class="w-full">
+    <app-button [text]="'Acessar'"></app-button>
+  </div>
+</form>
