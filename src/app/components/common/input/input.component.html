@@ -1,9 +1,21 @@
 <div class="card flex justify-content-center">
   @if (type != "password") {
-    <input [type]="type" pInputText [(ngModel)]="value" class="w-full font-poppins text-sm"/>
+    <input
+      [type]="type"
+      [value]="value"
+      (input)="onInput($event)"
+      pInputText
+      class="w-full font-poppins text-sm"
+    />
   } @else {
     <div class="flex items-center w-full relative">
-      <input [type]="isPassVisible() ? 'text' : 'password'" pInputText [(ngModel)]="value" class="w-full font-poppins text-sm"/>
+      <input
+        [type]="isPassVisible() ? 'text' : 'password'"
+        [value]="value"
+        (input)="onInput($event)"
+        pInputText
+        class="w-full font-poppins text-sm"
+      />
       <lucide-angular
         [img]="isPassVisible() ? Eye : EyeOff"
         [size]="18"

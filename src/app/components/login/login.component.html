@@ -1,13 +1,14 @@
-<form class="w-full h-full flex flex-col justify-center items-center gap-8">
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="w-full h-full flex flex-col justify-center items-center gap-8">
   <div>
     <h2 class="font-semibold text-2xl text-center">Acessar App</h2>
     <h6 class="">Comece a gerenciar suas tarefas a partir de hoje!</h6>
   </div>
   <div class="flex flex-col gap-2 w-full">
     <h2>E-mail:</h2>
-    <app-input [type]="'email'"></app-input>
+    <app-input [type]="'email'" formControlName="email"></app-input>
     <h2>Senha:</h2>
-    <app-input [type]="'password'"></app-input>
+    <app-input [type]="'password'" formControlName="password"></app-input>
+    <h2 class="text-base text-zinc-500 underline hover:cursor-pointer">Esqueceu sua senha?</h2>
   </div>
   <div class="w-full">
     <app-button [text]="'Acessar'"></app-button>
