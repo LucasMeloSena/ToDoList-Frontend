@@ -10,7 +10,11 @@
   </div>
 
   <div class="relative flex flex-col items-center justify-center">
-    <app-button class="absolute top-8 right-8" text="Cadastro" [isOutline]="true"/>
-    <app-login></app-login>
+    <app-button class="absolute top-8 right-8" [text]="headerButtonText()" [isOutline]="true" (click)="toogleAuthPage()" [type]="'button'"/>
+    @if (isLoginCurrentPage()) {
+      <app-login></app-login>
+    } @else {
+      <app-register></app-register>
+    }
   </div>
 </div>

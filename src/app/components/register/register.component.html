@@ -1,1 +1,21 @@
-<p>register works!</p>
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="w-full h-full flex flex-col justify-center items-center gap-8">
+  <div>
+    <h2 class="font-semibold text-2xl text-center">Criar Conta</h2>
+    <h6 class="text-zinc-500 font-light">Crie sua conta agora e comece a otimizar sua rotina!</h6>
+  </div>
+  <div class="flex flex-col gap-2 w-full">
+    <h2>Nome:</h2>
+    <app-input [type]="'text'" formControlName="name" placeholder="John Doe"></app-input>
+    <h2>E-mail:</h2>
+    <app-input [type]="'email'" formControlName="email" placeholder="johndoe@email.com"></app-input>
+    <h2>Celular:</h2>
+    <app-input [type]="'text'" formControlName="phone" placeholder="(XX) 9 0000-0000" mask="(99) 9 9999-9999"></app-input>
+    <h2>Senha:</h2>
+    <app-input [type]="'password'" formControlName="password" ></app-input>
+    <h2>Confirmar Senha:</h2>
+    <app-input [type]="'password'" formControlName="confirm_password"></app-input>
+  </div>
+  <div class="w-full">
+    <app-button [text]="'Cadastrar'"></app-button>
+  </div>
+</form>

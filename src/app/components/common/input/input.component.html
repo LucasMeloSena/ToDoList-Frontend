@@ -1,12 +1,11 @@
 <div class="card flex justify-content-center">
   @if (type != "password") {
-    <input
-      [type]="type"
-      [value]="value"
-      (input)="onInput($event)"
-      pInputText
-      class="w-full font-poppins text-sm"
-    />
+    @if (mask) {
+      <p-inputMask class="w-full" styleClass="w-full font-poppins text-sm" [mask]="mask" [(ngModel)]="value" (onInput)="onInput($event)" [placeholder]="placeholder" />
+    } @else {
+      <input [type]="type" [value]="value" (input)="onInput($event)" [placeholder]="placeholder ?? ''" pInputText
+        class="w-full font-poppins text-sm" />
+    }
   } @else {
     <div class="flex items-center w-full relative">
       <input

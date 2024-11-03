@@ -2,7 +2,7 @@
   [class]="
     'w-full p-3 rounded-lg hover:cursor-pointer ' +
     (isOutline ? 'border-solid border-2 border-gray text-zinc-900 bg-transparent text-sm' : 'border-none text-base shadow-md bg-blue-400 text-white') "
-  (click)="onClick()"
+  [type]="type"
 >
   {{text}}
 </button>

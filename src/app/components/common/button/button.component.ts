@@ -9,13 +9,10 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 export class ButtonComponent implements OnInit {
   @Input({ required: true }) text!: string;
   @Input() isOutline?: boolean;
-  @Output() click = new EventEmitter<void>()
+  @Input() type?: "button" | "submit"
 
   ngOnInit() {
     if (!this.isOutline) this.isOutline = false;
-  }
-
-  onClick() {
-    this.click.emit()
+    if (!this.type) this.type = "submit";
   }
 }

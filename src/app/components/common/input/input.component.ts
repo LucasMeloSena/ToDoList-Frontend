@@ -2,11 +2,12 @@ import { Component, forwardRef, Input, signal } from '@angular/core';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from "@angular/forms"
 import { Eye, EyeOff, LucideAngularModule } from 'lucide-angular';
 import { InputTextModule } from "primeng/inputtext"
+import { InputMaskModule } from "primeng/inputmask"
 
 @Component({
   selector: 'app-input',
   standalone: true,
-  imports: [FormsModule, InputTextModule, LucideAngularModule],
+  imports: [FormsModule, InputMaskModule, InputTextModule, LucideAngularModule],
   templateUrl: './input.component.html',
   providers: [
     {
@@ -18,6 +19,8 @@ import { InputTextModule } from "primeng/inputtext"
 })
 export class InputComponent implements ControlValueAccessor {
   @Input({ required: true }) type!: string;
+  @Input() placeholder?: string;
+  @Input() mask?: string;
 
   readonly Eye = Eye;
   readonly EyeOff = EyeOff;
