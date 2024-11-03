@@ -10,6 +10,8 @@ export function showErrorMessage(form: FormGroup): string {
       if (control && control.invalid && control.errors) {
         if (control.errors['required']) {
           errorMessage = `O campo ${translatedField} é inválido!`;
+        } else if (control.errors['email']) {
+          errorMessage = `O endereço de e-mail não é válido.`;
         } else if (control.errors['minlength']) {
           const minLength = control.errors['minlength'].requiredLength;
           errorMessage = `O campo ${translatedField} deve possuir no mínimo ${minLength} caracteres.`;

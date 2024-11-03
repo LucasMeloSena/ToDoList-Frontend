@@ -7,9 +7,9 @@ import { ButtonComponent } from '../../components/common/button/button.component
   selector: 'app-home-page',
   standalone: true,
   imports: [LucideAngularModule, LoginComponent, ButtonComponent],
-  templateUrl: './home-page.component.html',
+  templateUrl: './auth-page.component.html',
 })
-export class HomePageComponent {
+export class AuthPageComponent {
   readonly Check = Check;
   today = new Date().getFullYear()
 }
