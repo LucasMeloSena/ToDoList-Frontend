@@ -1,0 +1,7 @@
+<header class="w-full bg-white h-24 shadow-lg rounded-sm p-8 grid grid-cols-3 items-center justify-start">
+  <h1 class="font-medium text-lg">ToDo List App</h1>
+  <app-input [type]="'text'"></app-input>
+  <div class="flex justify-center items-center justify-self-end">
+    <p-splitButton label="Nome do usuario" (onClick)="save('info')" [model]="items"/>
+  </div>
+</header>
