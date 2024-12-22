@@ -1,0 +1,43 @@
+
+  <div class="w-full shadow-lg rounded-md bg-white p-8 grid grid-cols-4 items-center justify-start gap-4">
+    <div class="">
+      <h2 class="font-semibold text-lg">{{data.name}}</h2>
+      <h2 class="text-sm text-zinc-400 break-words">
+        {{data.description}}</h2>
+    </div>
+    @if (data.priority == "high") {
+      <div class="flex items-center justify-center justify-self-end bg-red-600 w-[120px] rounded-md">
+        <h2 class="text-sm text-white">{{data.priority}}</h2>
+      </div>
+    } @else if (data.priority == "medium") {
+      <div class="flex items-center justify-center justify-self-end bg-yellow-400 w-[120px] rounded-md">
+        <h2 class="text-sm text-white">{{data.priority}}</h2>
+      </div>
+    } @else {
+      <div class="flex items-center justify-center justify-self-end bg-green-700 w-[120px] rounded-md">
+        <h2 class="text-sm text-white">{{data.priority}}</h2>
+      </div>
+    }
+    <div class="flex flex-row items-center justify-center gap-2">
+      <lucide-angular [img]="Clock" [size]="18" color="#b5b5b5" />
+      <h2 class="text-sm">Restam {{days}} dias</h2>
+    </div>
+    <div class="flex flex-row gap-4 items-center justify-center">
+      @if (data.status == "Pendente") {
+        <div class="bg-gray h-2 rounded-full w-3/4">
+          <div class="bg-black h-2 rounded-full w-1/12"></div>
+        </div>
+        <h2>0%</h2>
+      } @else if (data.status == "Em progresso") {
+        <div class="bg-gray h-2 rounded-full w-3/4">
+          <div class="bg-black h-2 rounded-full w-6/12"></div>
+        </div>
+        <h2>50%</h2>
+      } @else {
+        <div class="bg-gray h-2 rounded-full w-3/4">
+          <div class="bg-black h-2 rounded-full w-12/12"></div>
+        </div>
+        <h2>100%</h2>
+      }
+    </div>
+  </div>

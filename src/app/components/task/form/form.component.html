@@ -1,0 +1,28 @@
+<p-dialog [header]="title" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="mt-2 flex flex-col gap-6">
+    <div class="grid grid-cols-2 items-center">
+      <h2>Nome:</h2>
+      <app-input type="text" formControlName="name"></app-input>
+    </div>
+    <div class="grid grid-cols-2 items-center">
+      <h2>Descrição:</h2>
+      <app-input type="text" formControlName="description"></app-input>
+    </div>
+    <div class="grid grid-cols-2 items-center">
+      <h2>Prioridade:</h2>
+      <app-select [options]="priorities" formControlName="priority"/>
+    </div>
+    <div class="grid grid-cols-2 items-center">
+      <h2>Data de Término:</h2>
+      <app-input type="date" formControlName="end_at"></app-input>
+    </div>
+    <div class="grid grid-cols-2 items-center">
+      <h2>Status:</h2>
+      <app-select [options]="status" formControlName="status"/>
+      </div>
+    <div class="flex justify-end gap-2">
+      <app-button text="Cancelar" (click)="visible = false" />
+      <app-button text="Salvar"/>
+    </div>
+  </form>
+</p-dialog>

@@ -1,1 +1,17 @@
-<p>app-page works!</p>
+<app-header/>
+
+<app-task-form [visible]="visible()" title="Cadastrar Tarefa" (onAddTask)="createTask($event)"></app-task-form>
+
+<main class="h-full w-full flex flex-col gap-8 mt-4 p-8">
+  <div class="w-full grid grid-cols-2">
+    <p-dropdown [options]="filters" [(ngModel)]="selectedFilter" optionLabel="name" placeholder="Filtros"/>
+    <div class="w-1/4 justify-self-end">
+      <app-button text="Adicionar" (click)="createTaskModal()"/>
+    </div>
+  </div>
+
+  <div>
+    <h2 class="text-zinc-400">TODO</h2>
+    <app-task-card [data]="example"></app-task-card>
+  </div>
+</main>
