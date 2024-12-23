@@ -1,6 +1,6 @@
-<app-header />
+<app-header (taskName)="onChangeTaskName($event)"/>
 
-<app-task-form [visible]="visible()" title="Cadastrar Tarefa" (onAddTask)="createTask($event)"></app-task-form>
+<app-task-form [visible]="visible()" title="Cadastrar Tarefa" (onAddTask)="createTask($event)" (refetchTasks)="deletedTask()"/>
 
 <main class="h-full w-full flex flex-col gap-8 mt-4 p-8">
   <div class="w-full grid grid-cols-2">
@@ -15,27 +15,42 @@
       <p-progressSpinner ariaLabel="loading" />
     </div>
   } @else {
-    @if (filteredTasks(taskStatus.todo).length > 0) {
+    @if (selectedFilter.name == "all" || selectedFilter.name == 'todo') {
       <div class="flex flex-col gap-4">
         <h2 class="text-zinc-400">TODO</h2>
+        @if (filteredTasks(taskStatus.todo).length == 0) {
+          <div class="w-full shadow-lg rounded-md bg-white p-8 grid grid-cols-4 items-center justify-start gap-4">
+            <h2>Nenhuma tarefa cadastrada.</h2>
+          </div>
+        }
         @for (task of filteredTasks(taskStatus.todo); track task.id) {
           <app-task-card [data]="task"></app-task-card>
         }
       </div>
     }
 
-    @if (filteredTasks(taskStatus.inprogress).length > 0) {
+    @if (selectedFilter.name == "all" || selectedFilter.name == 'inprogress') {
       <div class="flex flex-col gap-4">
         <h2 class="text-zinc-400">IN PROGRESS</h2>
+        @if (filteredTasks(taskStatus.inprogress).length == 0) {
+          <div class="w-full shadow-lg rounded-md bg-white p-8 grid grid-cols-4 items-center justify-start gap-4">
+            <h2>Nenhuma tarefa cadastrada.</h2>
+          </div>
+        }
         @for (task of filteredTasks(taskStatus.inprogress); track task.id) {
           <app-task-card [data]="task"></app-task-card>
         }
       </div>
     }
 
-    @if (filteredTasks(taskStatus.done).length > 0) {
+    @if (selectedFilter.name == "all" || selectedFilter.name == 'done') {
       <div class="flex flex-col gap-4">
         <h2 class="text-zinc-400">DONE</h2>
+        @if (filteredTasks(taskStatus.done).length == 0) {
+          <div class="w-full shadow-lg rounded-md bg-white p-8 grid grid-cols-4 items-center justify-start gap-4">
+            <h2>Nenhuma tarefa cadastrada.</h2>
+          </div>
+        }
         @for (task of filteredTasks(taskStatus.done); track task.id) {
           <app-task-card [data]="task"></app-task-card>
         }

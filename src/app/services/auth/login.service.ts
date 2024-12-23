@@ -14,7 +14,16 @@ export interface LoginParams {
 @Injectable({ providedIn: "root" })
 export class LoginService {
   constructor(private http: HttpClient) {}
-  authenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  authenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.getAuthStateFromStorage());
+
+  private getAuthStateFromStorage(): boolean {
+    if (typeof window !== "undefined" && window.sessionStorage) {
+      const token = localStorage.getItem("token");
+      const user = sessionStorage.getItem("user");
+      return !!token && !!user;
+    }
+    return false;
+  }
 
   updateAuthState(value: boolean) {
     this.authenticated.next(value);

@@ -1,6 +1,6 @@
 <header class="w-full bg-white h-24 shadow-lg rounded-sm p-8 grid grid-cols-3 items-center justify-start">
   <h1 class="font-medium text-lg">ToDo List App</h1>
-  <app-input [type]="'text'"></app-input>
+  <app-input type="text" [(ngModel)]="filter" (onValueChage)="onFilterChange($event)" placeholder="Filtrar pelo nome..."></app-input>
   <div class="flex justify-center items-center justify-self-end">
     <p-splitButton [label]="username" (onClick)="save('info')" [model]="items" />
   </div>

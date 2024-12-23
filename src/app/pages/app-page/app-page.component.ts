@@ -31,17 +31,26 @@ export class AppPageComponent implements OnInit {
   ) {}
 
   filters: Status[] | undefined;
-  selectedFilter: Status | undefined;
+  selectedFilter: Status = { name: TaskStatus.all };
   visible = signal(false);
   taskStatus = TaskStatus;
+  taskName = signal<string | undefined>(undefined);
 
   ngOnInit() {
-    this.filters = [{ name: TaskStatus.todo }, { name: TaskStatus.inprogress }, { name: TaskStatus.done }];
+    this.filters = [{ name: TaskStatus.all }, { name: TaskStatus.todo }, { name: TaskStatus.inprogress }, { name: TaskStatus.done }];
+  }
+
+  onChangeTaskName(value: string) {
+    this.taskName.set(value);
   }
 
   tasks = injectQuery(() => ({
-    queryKey: [QueryKeys.find_all_tasks],
+    queryKey: [QueryKeys.find_all_tasks, this.taskName()],
     queryFn: async () => {
+      if (this.taskName) {
+        const response = await this.taskService.fetchTasksApi(this.taskName());
+        return response.data;
+      }
       const response = await this.taskService.fetchTasksApi();
       return response.data;
     },
@@ -54,6 +63,10 @@ export class AppPageComponent implements OnInit {
 
   createTaskModal() {
     this.visible.set(!this.visible());
+  }
+
+  deletedTask() {
+    this.tasks.refetch();
   }
 
   async createTask(task: Task) {

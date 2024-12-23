@@ -1,0 +1,6 @@
+<p-dialog [header]="title" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }">
+  <div class="flex flex-col gap-4">
+    <h4>Você deseja excluir esta tarefa?</h4>
+    <app-button text="Confirmar" type="button" (click)="deleteTask()"/>
+  </div>
+</p-dialog>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { InputComponent } from "../input/input.component";
 import { LucideAngularModule, User } from "lucide-angular";
 import { SplitButtonModule } from "primeng/splitbutton";
@@ -6,11 +6,12 @@ import { MenuItem, MessageService } from "primeng/api";
 import { SessionService } from "../../../services/app/session.service";
 import { Router } from "@angular/router";
 import { LoginService } from "../../../services/auth/login.service";
+import { FormsModule } from "@angular/forms";
 
 @Component({
   selector: "app-header",
   standalone: true,
-  imports: [InputComponent, LucideAngularModule, SplitButtonModule],
+  imports: [FormsModule, InputComponent, LucideAngularModule, SplitButtonModule],
   providers: [MessageService],
   templateUrl: "./header.component.html",
 })
@@ -21,11 +22,13 @@ export class HeaderComponent implements OnInit {
     private readonly loginService: LoginService,
     private readonly router: Router,
   ) {}
+  @Output() taskName = new EventEmitter<string>();
 
   readonly User = User;
 
   items: MenuItem[] = [];
   username: string = "";
+  filter: string = "";
 
   ngOnInit(): void {
     this.username = this.sessionService.getUserData()?.name ?? "";
@@ -42,6 +45,10 @@ export class HeaderComponent implements OnInit {
         },
       },
     ];
+  }
+
+  onFilterChange(value: string) {
+    this.taskName.emit(value);
   }
 
   save(severity: string) {

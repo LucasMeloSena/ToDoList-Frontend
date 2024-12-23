@@ -32,6 +32,7 @@ export class FormComponent implements OnInit {
 
   @Input({ required: true }) visible!: boolean;
   @Input({ required: true }) title!: string;
+  @Input() defaultValues?: Task;
   @Output() onAddTask = new EventEmitter<Task>();
 
   priorities?: Priorities[];
@@ -49,6 +50,10 @@ export class FormComponent implements OnInit {
       { id: "2", value: TaskStatus.inprogress },
       { id: "3", value: TaskStatus.done },
     ];
+    if (this.defaultValues) {
+      this.defaultValues.end_at = new Date(this.defaultValues.end_at).toISOString().split("T")[0];
+      this.form.patchValue(this.defaultValues);
+    }
   }
 
   form: FormGroup = new FormGroup({
@@ -61,7 +66,7 @@ export class FormComponent implements OnInit {
     priority: new FormControl("", {
       validators: [Validators.required, enumValidator(TaskPriority)],
     }),
-    end_at: new FormControl("", {
+    end_at: new FormControl(new Date(), {
       validators: [Validators.required],
     }),
     status: new FormControl("", {

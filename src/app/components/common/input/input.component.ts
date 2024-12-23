@@ -1,4 +1,4 @@
-import { Component, forwardRef, Input, signal } from "@angular/core";
+import { Component, EventEmitter, forwardRef, Input, Output, signal } from "@angular/core";
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from "@angular/forms";
 import { Eye, EyeOff, LucideAngularModule } from "lucide-angular";
 import { InputTextModule } from "primeng/inputtext";
@@ -21,6 +21,7 @@ export class InputComponent implements ControlValueAccessor {
   @Input({ required: true }) type!: string;
   @Input() placeholder?: string;
   @Input() mask?: string;
+  @Output() onValueChage = new EventEmitter<string>();
 
   readonly Eye = Eye;
   readonly EyeOff = EyeOff;
@@ -39,6 +40,7 @@ export class InputComponent implements ControlValueAccessor {
     const input = event.target as HTMLInputElement;
     this.value = input.value;
     this.onChange(this.value);
+    this.onValueChage.emit(this.value);
   }
 
   writeValue(value: string): void {

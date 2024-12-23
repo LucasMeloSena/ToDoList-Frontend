@@ -1,4 +1,7 @@
-<div class="w-full shadow-lg rounded-md bg-white p-8 grid grid-cols-4 items-center justify-start gap-4">
+<app-task-form [visible]="updateModalVisible()" title="Atualizar Tarefa" [defaultValues]="data"/>
+<app-delete-task [visible]="deleteModalVisible()" title="Excluir Tarefa" [taskId]="data.id" (toggleModalVisible)="deletedTask($event)"/>
+
+<div class="w-full shadow-lg rounded-md bg-white p-8 grid grid-cols-5 items-center justify-start gap-4">
   <div class="">
     <h2 class="font-semibold text-lg">{{ data.name }}</h2>
     <h2 class="text-sm text-zinc-400 break-words">
@@ -39,5 +42,9 @@
       </div>
       <h2>100%</h2>
     }
+  </div>
+  <div class="flex flex-row gap-2 item-center justify-end">
+    <lucide-angular class="hover:cursor-pointer" [img]="Pen" [size]="18" color="#b5b5b5" (click)="updateTask()"/>
+    <lucide-angular class="hover:cursor-pointer" [img]="Trash" [size]="18" color="#b5b5b5" (click)="deleteTask()"/>
   </div>
 </div>
