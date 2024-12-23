@@ -1,17 +1,45 @@
-<app-header/>
+<app-header />
 
 <app-task-form [visible]="visible()" title="Cadastrar Tarefa" (onAddTask)="createTask($event)"></app-task-form>
 
 <main class="h-full w-full flex flex-col gap-8 mt-4 p-8">
   <div class="w-full grid grid-cols-2">
-    <p-dropdown [options]="filters" [(ngModel)]="selectedFilter" optionLabel="name" placeholder="Filtros"/>
+    <p-dropdown [options]="filters" [(ngModel)]="selectedFilter" optionLabel="name" placeholder="Filtros" />
     <div class="w-1/4 justify-self-end">
-      <app-button text="Adicionar" (click)="createTaskModal()"/>
+      <app-button text="Adicionar" (click)="createTaskModal()" />
     </div>
   </div>
 
-  <div>
-    <h2 class="text-zinc-400">TODO</h2>
-    <app-task-card [data]="example"></app-task-card>
-  </div>
+  @if (tasks.isPending()) {
+    <div class="w-full flex justify-center items-center">
+      <p-progressSpinner ariaLabel="loading" />
+    </div>
+  } @else {
+    @if (filteredTasks(taskStatus.todo).length > 0) {
+      <div class="flex flex-col gap-4">
+        <h2 class="text-zinc-400">TODO</h2>
+        @for (task of filteredTasks(taskStatus.todo); track task.id) {
+          <app-task-card [data]="task"></app-task-card>
+        }
+      </div>
+    }
+
+    @if (filteredTasks(taskStatus.inprogress).length > 0) {
+      <div class="flex flex-col gap-4">
+        <h2 class="text-zinc-400">IN PROGRESS</h2>
+        @for (task of filteredTasks(taskStatus.inprogress); track task.id) {
+          <app-task-card [data]="task"></app-task-card>
+        }
+      </div>
+    }
+
+    @if (filteredTasks(taskStatus.done).length > 0) {
+      <div class="flex flex-col gap-4">
+        <h2 class="text-zinc-400">DONE</h2>
+        @for (task of filteredTasks(taskStatus.done); track task.id) {
+          <app-task-card [data]="task"></app-task-card>
+        }
+      </div>
+    }
+  }
 </main>

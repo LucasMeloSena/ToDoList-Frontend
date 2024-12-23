@@ -1,4 +1,4 @@
-import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { AbstractControl, ValidationErrors, ValidatorFn } from "@angular/forms";
 
 export function enumValidator<T extends Record<string, string | number>>(enumType: T): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
@@ -7,8 +7,6 @@ export function enumValidator<T extends Record<string, string | number>>(enumTyp
     }
 
     const validValues = Object.values(enumType);
-    return validValues.includes(control.value)
-      ? null
-      : { enum: { validValues, actualValue: control.value } };
+    return validValues.includes(control.value) ? null : { enum: { validValues, actualValue: control.value } };
   };
 }

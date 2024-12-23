@@ -1,16 +1,6 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  forwardRef,
-  OnInit,
-} from '@angular/core';
-import {
-  ControlValueAccessor,
-  NG_VALUE_ACCESSOR,
-} from '@angular/forms';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Component, EventEmitter, Input, Output, forwardRef } from "@angular/core";
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 interface SelectValue {
   id: string;
@@ -18,10 +8,10 @@ interface SelectValue {
 }
 
 @Component({
-  selector: 'app-select',
+  selector: "app-select",
   standalone: true,
   imports: [ReactiveFormsModule, FormsModule],
-  templateUrl: './select.component.html',
+  templateUrl: "./select.component.html",
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -31,8 +21,8 @@ interface SelectValue {
   ],
 })
 export class SelectComponent implements ControlValueAccessor {
-  @Input({required: true}) options?: SelectValue[] = [];
-  @Input() placeholder: string = 'Selecione uma opção';
+  @Input({ required: true }) options?: SelectValue[] = [];
+  @Input() placeholder: string = "Selecione uma opção";
   @Input() disabled: boolean = false;
   @Output() valueChange = new EventEmitter<SelectValue>();
 
@@ -44,11 +34,11 @@ export class SelectComponent implements ControlValueAccessor {
     this.value = value;
   }
 
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: (value: SelectValue) => void): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
 

@@ -1,10 +1,11 @@
-import { Priority } from "../utils/enums/priorities";
+import { TaskPriority } from "../utils/enums/task-priority";
 import { TaskStatus } from "../utils/enums/task-status";
 
 export interface Task {
+  id: string;
   name: string;
   description: string;
-  priority: Priority;
+  priority: TaskPriority;
   start_at?: Date;
   end_at: Date;
   status: TaskStatus;

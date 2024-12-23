@@ -4,13 +4,11 @@
       <lucide-angular [img]="Check" [size]="18"></lucide-angular>
       <span class="font-semibold">ToDo List</span>
     </div>
-    <footer class="text-sm font-poppins">
-      &copy; ToDo List - {{today}}
-    </footer>
+    <footer class="text-sm font-poppins">&copy; ToDo List - {{ today }}</footer>
   </div>
 
   <div class="relative flex flex-col items-center justify-center">
-    <app-button class="absolute top-8 right-8" [text]="headerButtonText()" [isOutline]="true" (click)="toogleAuthPage()" [type]="'button'"/>
+    <app-button class="absolute top-8 right-8" [text]="headerButtonText()" [isOutline]="true" (click)="toogleAuthPage()" [type]="'button'" />
     @if (isLoginCurrentPage()) {
       <app-login></app-login>
     } @else {

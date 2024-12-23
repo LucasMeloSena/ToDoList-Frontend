@@ -10,7 +10,7 @@
     </div>
     <div class="grid grid-cols-2 items-center">
       <h2>Prioridade:</h2>
-      <app-select [options]="priorities" formControlName="priority"/>
+      <app-select [options]="priorities" formControlName="priority" />
     </div>
     <div class="grid grid-cols-2 items-center">
       <h2>Data de Término:</h2>
@@ -18,11 +18,11 @@
     </div>
     <div class="grid grid-cols-2 items-center">
       <h2>Status:</h2>
-      <app-select [options]="status" formControlName="status"/>
-      </div>
+      <app-select [options]="status" formControlName="status" />
+    </div>
     <div class="flex justify-end gap-2">
       <app-button text="Cancelar" (click)="visible = false" />
-      <app-button text="Salvar"/>
+      <app-button text="Salvar" />
     </div>
   </form>
 </p-dialog>

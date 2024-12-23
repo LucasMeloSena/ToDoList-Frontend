@@ -1,15 +1,15 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from "@angular/core";
 
 @Component({
-  selector: 'app-button',
+  selector: "app-button",
   standalone: true,
   imports: [],
-  templateUrl: './button.component.html',
+  templateUrl: "./button.component.html",
 })
 export class ButtonComponent implements OnInit {
   @Input({ required: true }) text!: string;
   @Input() isOutline?: boolean;
-  @Input() type?: "button" | "submit"
+  @Input() type?: "button" | "submit";
 
   ngOnInit() {
     if (!this.isOutline) this.isOutline = false;

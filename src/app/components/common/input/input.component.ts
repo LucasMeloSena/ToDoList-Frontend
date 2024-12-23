@@ -1,14 +1,14 @@
-import { Component, forwardRef, Input, signal } from '@angular/core';
-import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from "@angular/forms"
-import { Eye, EyeOff, LucideAngularModule } from 'lucide-angular';
-import { InputTextModule } from "primeng/inputtext"
-import { InputMaskModule } from "primeng/inputmask"
+import { Component, forwardRef, Input, signal } from "@angular/core";
+import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from "@angular/forms";
+import { Eye, EyeOff, LucideAngularModule } from "lucide-angular";
+import { InputTextModule } from "primeng/inputtext";
+import { InputMaskModule } from "primeng/inputmask";
 
 @Component({
-  selector: 'app-input',
+  selector: "app-input",
   standalone: true,
   imports: [FormsModule, InputMaskModule, InputTextModule, LucideAngularModule],
-  templateUrl: './input.component.html',
+  templateUrl: "./input.component.html",
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -29,7 +29,7 @@ export class InputComponent implements ControlValueAccessor {
   value: string | undefined;
 
   togglePassVisibility() {
-    const newValue = !this.isPassVisible()
+    const newValue = !this.isPassVisible();
     this.isPassVisible.set(newValue);
   }
 

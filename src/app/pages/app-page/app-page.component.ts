@@ -1,60 +1,70 @@
-import { Component, OnInit, signal } from '@angular/core';
-import { HeaderComponent } from '../../components/common/header/header.component';
-import { DropdownModule } from "primeng/dropdown"
-import { FormsModule } from '@angular/forms';
-import { LucideAngularModule } from 'lucide-angular';
+import { Component, OnInit, signal } from "@angular/core";
+import { HeaderComponent } from "../../components/common/header/header.component";
+import { DropdownModule } from "primeng/dropdown";
+import { FormsModule } from "@angular/forms";
+import { LucideAngularModule } from "lucide-angular";
 import { ButtonComponent } from "../../components/common/button/button.component";
-import { TaskStatus } from '../../utils/enums/task-status';
+import { TaskStatus } from "../../utils/enums/task-status";
 import { FormComponent } from "../../components/task/form/form.component";
 import { CardComponent } from "../../components/task/card/card.component";
-import { Priority } from '../../utils/enums/priorities';
-import { TaskService } from '../../services/app/task.service';
-import { Task } from '../../models/task';
-import { ToastrService } from 'ngx-toastr';
+import { TaskService } from "../../services/app/task.service";
+import { Task } from "../../models/task";
+import { ToastrService } from "ngx-toastr";
+import { injectQuery } from "@tanstack/angular-query-experimental";
+import { QueryKeys } from "../../utils/enums/query-keys";
+import { ProgressSpinnerModule } from "primeng/progressspinner";
 
 interface Status {
-  name: TaskStatus
+  name: TaskStatus;
 }
 
 @Component({
-  selector: 'app-app-page',
+  selector: "app-app-page",
   standalone: true,
-  imports: [HeaderComponent, DropdownModule, FormsModule, LucideAngularModule, ButtonComponent, FormComponent, CardComponent],
-  templateUrl: './app-page.component.html',
+  imports: [HeaderComponent, DropdownModule, FormsModule, LucideAngularModule, ButtonComponent, FormComponent, CardComponent, ProgressSpinnerModule],
+  templateUrl: "./app-page.component.html",
 })
 export class AppPageComponent implements OnInit {
-  constructor (private taskService: TaskService, private toast: ToastrService) {}
+  constructor(
+    private taskService: TaskService,
+    private toast: ToastrService,
+  ) {}
 
   filters: Status[] | undefined;
   selectedFilter: Status | undefined;
   visible = signal(false);
+  taskStatus = TaskStatus;
 
   ngOnInit() {
-    this.filters = [
-      { name: TaskStatus.todo},
-      { name: TaskStatus.inprogress },
-      { name: TaskStatus.done, },
-    ];
+    this.filters = [{ name: TaskStatus.todo }, { name: TaskStatus.inprogress }, { name: TaskStatus.done }];
+  }
+
+  tasks = injectQuery(() => ({
+    queryKey: [QueryKeys.find_all_tasks],
+    queryFn: async () => {
+      const response = await this.taskService.fetchTasksApi();
+      return response.data;
+    },
+  }));
+
+  filteredTasks(status: TaskStatus) {
+    if (!this.tasks.data) return [];
+    return this.tasks.data()?.filter((task) => task.status === status) || [];
   }
 
   createTaskModal() {
-    this.visible.set(!this.visible())
+    this.visible.set(!this.visible());
   }
 
   async createTask(task: Task) {
     try {
-      task.start_at = new Date()
-      await this.taskService.createTask(task)
+      task.start_at = new Date();
+      task.end_at = new Date(task.end_at);
+      await this.taskService.createTask(task);
+      this.visible.set(!this.visible());
+      this.tasks.refetch();
     } catch (_) {
-      this.toast.error("Ocorreu um erro ao criar a tarefa!")
+      this.toast.error("Ocorreu um erro ao criar a tarefa!");
     }
-  }
-
-  example = {
-    name: "Name",
-    description: "Description",
-    priority: Priority.medium,
-    end_at: new Date(),
-    status: TaskStatus.todo
   }
 }
