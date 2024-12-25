@@ -65,7 +65,7 @@ export class AppPageComponent implements OnInit {
     this.visible.set(!this.visible());
   }
 
-  deletedTask() {
+  refetchTasks() {
     this.tasks.refetch();
   }
 

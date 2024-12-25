@@ -34,6 +34,7 @@ export class FormComponent implements OnInit {
   @Input({ required: true }) title!: string;
   @Input() defaultValues?: Task;
   @Output() onAddTask = new EventEmitter<Task>();
+  @Output() onUpdateTask = new EventEmitter<Partial<Task>>();
 
   priorities?: Priorities[];
   status?: Status[];
@@ -80,6 +81,25 @@ export class FormComponent implements OnInit {
       this.toast.warning(errorMessage);
       return;
     }
-    this.onAddTask.emit(this.form.value);
+    const formValues = this.form.value;
+    const changedValues: Partial<Task> = {};
+    const isEndAtIncorrect = this.defaultValues?.end_at.toString().includes("T");
+
+    if (this.defaultValues) {
+      if (isEndAtIncorrect) {
+        this.defaultValues.end_at = new Date(this.defaultValues.end_at).toISOString().split("T")[0];
+      }
+      Object.keys(formValues).forEach((key) => {
+        if (formValues[key] !== this.defaultValues![key as keyof Task]) {
+          changedValues[key as keyof Task] = formValues[key];
+        }
+      });
+      if (changedValues.end_at) {
+        changedValues.end_at = new Date(changedValues.end_at);
+      }
+      this.onUpdateTask.emit(changedValues);
+    } else {
+      this.onAddTask.emit(formValues);
+    }
   }
 }

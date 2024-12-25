@@ -6,15 +6,23 @@ import { firstValueFrom } from "rxjs";
 import { Response } from "../../models/response";
 import { Task } from "../../models/task";
 
+interface UpdateTaskData {
+  id: string;
+  task: Partial<Task>;
+}
+
 @Injectable({ providedIn: "root" })
 export class TaskService {
   constructor(private http: HttpClient) {}
 
-  createMutation = injectMutation(() => ({
+  private createMutation = injectMutation(() => ({
     mutationFn: (task: Task) => this.createTaskApi(task),
   }));
-  deleteMutation = injectMutation(() => ({
+  private deleteMutation = injectMutation(() => ({
     mutationFn: (id: string) => this.deleteTaskApi(id),
+  }));
+  private updateMutation = injectMutation(() => ({
+    mutationFn: (data: UpdateTaskData) => this.updateTaskApi(data),
   }));
 
   private async createTaskApi(task: Task): Promise<Response<string>> {
@@ -41,6 +49,19 @@ export class TaskService {
 
   async deleteTask(id: string) {
     const response = await this.deleteMutation.mutateAsync(id);
+    if (response.error) throw new Error();
+  }
+
+  private async updateTaskApi(data: UpdateTaskData): Promise<Response<null>> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    });
+    return await firstValueFrom(this.http.put<Promise<Response<null>>>(`${environment.apiUrl}/task/${data.id}`, data.task, { headers }));
+  }
+
+  async updateTask(id: string, task: Partial<Task>) {
+    const response = await this.updateMutation.mutateAsync({ id, task });
     if (response.error) throw new Error();
   }
 

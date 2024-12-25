@@ -1,6 +1,6 @@
 <app-header (taskName)="onChangeTaskName($event)"/>
 
-<app-task-form [visible]="visible()" title="Cadastrar Tarefa" (onAddTask)="createTask($event)" (refetchTasks)="deletedTask()"/>
+<app-task-form [visible]="visible()" title="Cadastrar Tarefa" (onAddTask)="createTask($event)" (refetchTasks)="refetchTasks()"/>
 
 <main class="h-full w-full flex flex-col gap-8 mt-4 p-8">
   <div class="w-full grid grid-cols-2">
@@ -24,7 +24,7 @@
           </div>
         }
         @for (task of filteredTasks(taskStatus.todo); track task.id) {
-          <app-task-card [data]="task"></app-task-card>
+          <app-task-card [data]="task" (refetchTasks)="refetchTasks()"></app-task-card>
         }
       </div>
     }
@@ -38,7 +38,7 @@
           </div>
         }
         @for (task of filteredTasks(taskStatus.inprogress); track task.id) {
-          <app-task-card [data]="task"></app-task-card>
+          <app-task-card [data]="task" (refetchTasks)="refetchTasks()"></app-task-card>
         }
       </div>
     }
@@ -52,7 +52,7 @@
           </div>
         }
         @for (task of filteredTasks(taskStatus.done); track task.id) {
-          <app-task-card [data]="task"></app-task-card>
+          <app-task-card [data]="task" (refetchTasks)="refetchTasks()"></app-task-card>
         }
       </div>
     }
